@@ -1,0 +1,32 @@
+{
+  "name": "nuibot",
+  "version": "1.0.0",
+  "description": "discord music bot for private use",
+  "main": "index.js",
+  "dependencies": {
+    "@discordjs/opus": "^0.3.3",
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "ffmpeg": "0.0.4",
+    "ytdl-core": "^4.4.4",
+    "ytdl-core-discord": "^1.2.5"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/nuiBOT.js",
+    "dev": "nodemon ./src/nuiBOT.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fafnirZ/nuiBOT.git"
+  },
+  "author": "fafnir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fafnirZ/nuiBOT/issues"
+  },
+  "homepage": "https://github.com/fafnirZ/nuiBOT#readme"
+}
