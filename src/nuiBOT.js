@@ -2,6 +2,7 @@
 const Play = require('./components/play.js')
 const Stop = require('./components/stop.js')
 const Queue = require('./components/queue.js')
+const Skip = require('./components/skip.js')
 const config = require('./config.js')
 
 
@@ -35,6 +36,10 @@ client.on('message', message => {
 			Stop(message);
 			return;
 
+		case 'skip':
+			Skip(message);
+			return;
+
 		/*debugging commands */
 		case 'server':
 			var server = servers[message.guild.id];
@@ -43,9 +48,9 @@ client.on('message', message => {
 		case 'quit':
 			var server = servers[message.guild.id];
 			try {
-				server.dispatcher.destroy();
-				delete server.dispatcher;
 				message.guild.voice.connection.disconnect();
+				server.dispatcher.end();
+				delete server.dispatcher;
 				console.log('force disconnected');
 			}
 			catch(err) {
