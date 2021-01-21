@@ -10,8 +10,6 @@ const servers = config.servers;
 const PREFIX = config.prefix;
 
 
-
-
 client.login(process.env.DISCORDJS_BOT_TOKEN);
 
 
@@ -43,7 +41,10 @@ client.on('message', message => {
 			console.log(server);
 			return;
 		case 'quit':
+			var server = servers[message.guild.id];
 			try {
+				server.dispatcher.destroy();
+				delete server.dispatcher;
 				message.guild.voice.connection.disconnect();
 				console.log('force disconnected');
 			}
@@ -52,6 +53,9 @@ client.on('message', message => {
 				console.log(err);
 			}
 			return;
+
+		case 'client':
+			console.log(client.voice);
 		/*
 		case 'OP':
 			let admin = message.guild.roles.cache.find(role => role.name === 'Visible');

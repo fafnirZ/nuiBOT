@@ -8,6 +8,8 @@ function Stop(message) {
 		}
 		server.dispatcher.destroy();
 		message.guild.voice.connection.disconnect();
+
+		delete server.dispatcher
 		console.log('stopped playing');
 	}else {
 		try{

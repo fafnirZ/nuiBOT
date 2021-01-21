@@ -53,7 +53,9 @@ function Play(args, message) {
 	server.queue.push(args[1]);
 
 	try{
-		if (!message.guild.voice) {
+		//checks if the current client has 0 voice connections 
+		//this bot only works for 1 server 
+		if (client.voice.connections.size == 0){
 			message.member.voice.channel.join().then(connection => {
 				play(connection, message);
 			})
