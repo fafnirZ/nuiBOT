@@ -10,9 +10,12 @@ const client = config.client;
 const servers = config.servers;
 const PREFIX = config.prefix;
 
-
-client.login(process.env.DISCORDJS_BOT_TOKEN);
-
+try {
+	client.login(process.env.DISCORDJS_BOT_TOKEN);
+}
+catch(err) {
+	console.log(err);
+}
 
 client.on('ready', ()=> {
 	console.log(`${client.user.tag} has logged on`)
