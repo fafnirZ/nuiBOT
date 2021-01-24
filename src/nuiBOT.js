@@ -11,7 +11,7 @@ const servers = config.servers;
 const PREFIX = config.prefix;
 
 try {
-	client.login(process.env.DISCORDJS_BOT_TOKEN);
+	client.login(process.env.BOT_TOKEN);
 }
 catch(err) {
 	console.log(err);
