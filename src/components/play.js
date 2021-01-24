@@ -65,14 +65,25 @@ async function Play(args, message) {
 				return;
 			}
 			else {
-				await yts(search[0]).then(result => server.queue.push(result.videos.slice(0,1)[0].url));
+				try {
+					await yts(search[0]).then(result => server.queue.push(result.videos.slice(0,1)[0].url));
+				}
+				catch(err) {
+					console.log(err)
+					
+				}
 				return;
 			}
 		}
 		else {
 			const key_search = search.join(' ');
 			console.log(key_search)
-			await yts(key_search).then(result => server.queue.push(result.videos.slice(0,1)[0].url));
+			try {
+				await yts(key_search).then(result => server.queue.push(result.videos.slice(0,1)[0].url));
+			}
+			catch (err) {
+				console.log(err)
+			}
 			return;
 		}
 		//check if args[1] i.e. message content is url or title of video
