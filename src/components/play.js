@@ -22,8 +22,8 @@ async function Play(args, message) {
 
 		server.dispatcher.on("finish", ()=> {
 			if(server.queue[0]) {
-				console.log('continuing');
-				message.channel.send(f'now playing: {server.queue[0]}')
+				
+				message.channel.send("now playing: " + server.queue[0])
 				play(connection, message);
 			}else {
 				console.log('disconnect');
@@ -107,7 +107,7 @@ async function Play(args, message) {
 		}
 	}
 	catch(err){
-
+		message.channel.send('an err has occured in getURL fnct')
 		console.log(err)
 	}
 
