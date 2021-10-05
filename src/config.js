@@ -4,7 +4,10 @@ import dotenv from 'dotenv';
 
 // adding intentions
 const myIntents = new Intents();
-myIntents.add(Intents.FLAGS.GUILDS);
+myIntents.add(Intents.FLAGS.GUILDS, 
+              Intents.FLAGS.GUILD_MESSAGES,
+              Intents.FLAGS.GUILD_VOICE_STATES
+              );
 
 
 const client = new Client({ intents: myIntents});

@@ -2,34 +2,43 @@ import ytdl from 'ytdl-core';
 import yts from 'yt-search';
 import {servers, client} from '../config.js';
 
+//voice connections are part of a new discordjs package now
+import { joinVoiceChannel } from '@discordjs/voice';
+
 
 async function Play(args, message) {
 
 	function play(connection, message) {
 
 		var server = servers[message.guild.id];
-		const broadcast = client.voice.createBroadcast();
-		console.log(server)
-		server.dispatcher = broadcast.play(ytdl(server.queue[0],{filter:"audioonly"}));
-		connection.play(broadcast);
+		//const broadcast = client.voice.createBroadcast();
+		//server.dispatcher = broadcast.play(ytdl(server.queue[0],{filter:"audioonly"}));
+		
+		const subscription = connection.subscribe(ytdl(server.queue[0],{filter:"audioonly"}))
+		
+		//connection.play(broadcast);
 		server.queue.shift();
 
-		server.dispatcher.on("finish", ()=> {
-			if(server.queue[0]) {
+		
+
+
+
+		// server.dispatcher.on("finish", ()=> {
+		// 	if(server.queue[0]) {
 				
-				message.channel.send("now playing: " + server.queue[0])
-				play(connection, message);
-			}else {
-				console.log('disconnect');
-				//server.dispatcher.end();
-				connection.disconnect();
-				//console.log(server.dispatcher.destroyed)
-				//make sure that the dispatcher object is removed from server
-				delete server.dispatcher;
-				console.log(servers[message.guild.id])
-				return;
-			}
-		})
+		// 		message.channel.send("now playing: " + server.queue[0])
+		// 		play(connection, message);
+		// 	}else {
+		// 		console.log('disconnect');
+		// 		//server.dispatcher.end();
+		// 		connection.disconnect();
+		// 		//console.log(server.dispatcher.destroyed)
+		// 		//make sure that the dispatcher object is removed from server
+		// 		delete server.dispatcher;
+		// 		console.log(servers[message.guild.id])
+		// 		return;
+		// 	}
+		// })
 	}
 
 
@@ -37,7 +46,8 @@ async function Play(args, message) {
 		message.channel.send('please provide a link');
 		return;
 	}
-	if (!message.member.voice.channelID) {
+	console.log(message.member.voice.channelId);
+	if (!message.member.voice.channelId) {
 		message.channel.send('you must be in a channel first');
 		return;
 	}
@@ -54,7 +64,6 @@ async function Play(args, message) {
 		
 		//if only args 1 then it could be url or search key
 		if (search.length == 1) {
-			console.log(search[0]);
 			if(search[0].match(/https:\/\/(www.)*youtube\.com\/watch\?v\=.*/)) {
 				server.queue.push(search[0]);
 				return;
@@ -91,13 +100,21 @@ async function Play(args, message) {
 	try{
 
 		await getURL(args);
+
 		//checks if the current client has 0 voice connections 
 		//this bot only works for 1 server 
-		if (client.voice.connections.size == 0){
-			message.member.voice.channel.join().then(connection => {
-				play(connection, message);
-			})
-			
+
+		const voice_channel_id = message.member.voice.channel.id
+		const guild_id = message.member.guild.id;
+		const adapterCreator = message.member.voice.guild.voiceAdapterCreator;
+		const connection = joinVoiceChannel({
+			channelId: voice_channel_id,
+			guildId: guild_id,
+			adapterCreator: adapterCreator
+		})
+
+		if(connection) {
+			play(connection, message);
 		}
 	}
 	catch(err){
