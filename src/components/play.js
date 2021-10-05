@@ -1,12 +1,6 @@
-const ytdl = require('ytdl-core')
-const yts = require('yt-search')
-const config = require('../config.js')
-
-
-const servers = config.servers;
-const client = config.client;
-
-
+import ytdl from 'ytdl-core';
+import yts from 'yt-search';
+import {servers, client} from '../config.js';
 
 
 async function Play(args, message) {
@@ -114,4 +108,4 @@ async function Play(args, message) {
 };
 
 
-module.exports = Play;
+export default Play;

@@ -1,4 +1,4 @@
-const servers = require('../config.js').servers
+import {servers} from '../config.js';
 
 function Queue (message) {
 	try {
@@ -21,4 +21,4 @@ function Queue (message) {
 	}
 }
 
-module.exports = Queue;
+export default Queue;

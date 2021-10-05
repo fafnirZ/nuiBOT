@@ -1,7 +1,4 @@
-const config = require('../config.js')
-
-const servers = config.servers;
-const client = config.client;
+import {servers,client} from '../config.js'
 
 function Skip(message) {
 	try{
@@ -14,4 +11,4 @@ function Skip(message) {
 	}
 }
 
-module.exports = Skip;
+export default Skip;

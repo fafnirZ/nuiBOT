@@ -1,15 +1,19 @@
-require('dotenv').config();
-
 //required modules
-const { Client } = require('discord.js');
+import { Client, Intents } from 'discord.js';
+import dotenv from 'dotenv';
+
+// adding intentions
+const myIntents = new Intents();
+myIntents.add(Intents.FLAGS.GUILDS);
 
 
-const client = new Client();
-const PREFIX = '!';
+const client = new Client({ intents: myIntents});
+const prefix = '!';
 var servers = {};
 
-//exporting
-exports.client = client;
-exports.prefix = PREFIX;
-exports.servers = servers;
+// initialise dotenv to enable env variables
+dotenv.config();
+
+
+export {client, prefix, servers}
 

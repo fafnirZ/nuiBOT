@@ -1,4 +1,4 @@
-const servers = require('../config.js').servers;
+import {servers} from '../config.js';
 
 function Stop(message) {
 	try {
@@ -31,4 +31,4 @@ function Stop(message) {
 
 }
 
-module.exports = Stop
+export default Stop
